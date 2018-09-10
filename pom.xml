@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xuxinyu.uidriver</groupId>
+    <artifactId>public-pom</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>pub-common</module>
+        <module>ui-action</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <!-- 版本管理，子项目继承这里的版本号，这样保证整个项目的版本号统一 -->
+        <testng.version>6.8</testng.version>
+        <log4j.version>1.2.17</log4j.version>
+        <selenium.version>2.53.0</selenium.version>
+        <poi.version>3.15</poi.version>
+        <plugin.surefire>2.10</plugin.surefire>
+        <plugin.resources>3.0.2</plugin.resources>
+        <plugin.compiler>3.6.1</plugin.compiler>
+        <reportng.version>1.0.0</reportng.version>
+
+        <!-- 定义私服仓库地址 -->
+        <maven.mirror.url>http://106.14.224.255:10804/nexus/content/</maven.mirror.url>
+        <!--设置工程的编码格式  -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <argLine>-Dfile.encoding=UTF-8</argLine>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${plugin.surefire}</version>
+                    <configuration>
+                        <suiteXmlFiles>
+                            <suiteXmlFile>./src/test/resources/testng.xml</suiteXmlFile>
+                        </suiteXmlFiles>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${plugin.resources}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${plugin.compiler}</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!-- 定义资源目录 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/test/resources</directory>
+            </resource>
+        </resources>
+
+    </build>
+
+    <!-- 设置dependencyManagement作用：
+    在父pom中设置dependencyManagement，表示父类的依赖不会在子类中直接生效，但是是可以被子类继承的
+    继承的子类仍然需要显式的指定这些依赖才能生效 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-java</artifactId>
+                <version>${selenium.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gooqing.perproj</groupId>
+                <artifactId>common-reportng</artifactId>
+                <version>${reportng.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <!--   使用私服作为自己的仓库 ，主要访问的是私服的仓库组-->
+        <repository>
+            <id>nexus</id>
+            <name>Nexus</name>
+            <url>${maven.mirror.url}groups/PublicRepositories/</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <!--  使用私服作为自己的插件仓库 ，主要访问的是私服的仓库组-->
+        <pluginRepository>
+            <id>nexus</id>
+            <name>Nexus</name>
+            <url>${maven.mirror.url}groups/PublicRepositories/</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <!--设置私服的私有发布版本仓库，需要私有仓库的用户名密码，在maven的setting.xml中设置-->
+            <id>releases</id>
+            <name>xuxinyu release repository</name>
+            <url>${maven.mirror.url}repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <!-- 设置私服的私有快照版本仓库，需要私有仓库的用户名密码，在maven的setting.xml中设置-->
+            <id>snapshots</id>
+            <name>xuxinyu snapshots repository</name>
+            <url>${maven.mirror.url}repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
+</project>

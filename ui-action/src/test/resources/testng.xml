@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="action test">
+<test name="web-selenium-demo">
+<classes>
+<class name="com.xuxinyu.action.CaseSuitsTest"></class>
+</classes>
+</test>
+<listeners>
+	<listener class-name="com.xuxinyu.uidriver.testng.RetryListener"></listener>
+	<listener class-name="com.xuxinyu.uidriver.testng.TestResultListener"></listener>
+	<listener class-name="org.uncommons.reportng.HTMLReporter"></listener>
+	<listener class-name="org.uncommons.reportng.JUnitXMLReporter"></listener>
+</listeners>
+</suite>
