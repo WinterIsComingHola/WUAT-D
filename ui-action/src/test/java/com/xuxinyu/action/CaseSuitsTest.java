@@ -24,20 +24,6 @@ public class CaseSuitsTest {
 	  }
 	  
   }
-
-
-
-
-  
-  @Test
-  public void webSeleniumDemoTest2(){
-	  ExcelUtil.setExcelfileinmaven("xlsx");
-	  LogObject.info("ceshipass");
-	  Reporter.log("测试通过");
-	  Reporter.log("测试通过");
-	  Reporter.log("测试通过");
-	  Reporter.log("测试通过");
-  }
   
 }		
 
